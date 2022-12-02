@@ -1,0 +1,29 @@
+.keyboard {
+    display: grid;
+    place-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.keyboard-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.keyboard-button {
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #818384;
+}
+
+.keyboard-button.green {
+    background-color: #538d4e;
+}
+
+.keyboard-button.yellow {
+    background-color: #b59f3b;
+}
+
+.keyboard-button.gray {
+    background-color: #3a3a3c;
+}

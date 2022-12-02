@@ -1,0 +1,107 @@
+section {
+    font-family: sans-serif;
+}
+
+section h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.row {
+    display: flex;
+    gap: 0.5rem;
+    place-items: center;
+}
+
+.animate .current-row {
+    animation: shake 250ms linear forwards;
+}
+
+.cell {
+    height: 3rem;
+    width: 3rem;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    perspective: 1000px;
+    box-sizing: border-box;
+}
+
+.flip-cards .container {
+    transform: rotateX(-180deg);
+}
+
+.cell .container {
+    transition: 1s;
+    transform-style: preserve-3d;
+    position: relative;
+    transform-origin: 100% 1.5rem;
+}
+
+.front,
+.back {
+    height: 3rem;
+    width: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.front {
+    z-index: 2;
+    transform: rotateX(0deg);
+    background-color: #121213;
+    border: 2px solid #3a3a3c;
+}
+
+.back {
+    transform: rotateX(180deg);
+}
+
+.cell:not(:empty) {
+    border-color: #565758;
+}
+
+.cell .green,
+.cell .yellow,
+.cell .gray {
+    border: none;
+}
+.cell .green {
+    background-color: #538d4e;
+}
+
+.cell .yellow {
+    background-color: #b59f3b;
+}
+
+.cell .gray {
+    background-color: #3a3a3c;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(-1px);
+    }
+
+    20% {
+        transform: translateX(4px);
+    }
+
+    60% {
+        transform: translateX(-2px);
+    }
+
+    80% {
+        transform: translateX(2px);
+    }
+}
