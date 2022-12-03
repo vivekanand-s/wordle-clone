@@ -12,7 +12,6 @@ export const KeyBoardRow = ({
     isLastRow = false,
 }: KeyBoardRowProps) => {
     const keyColor = useAppSelector(selectKeyColor);
-    console.log('isLastRow', isLastRow);
 
     return (
         <div className="keyboard-row">
@@ -21,6 +20,7 @@ export const KeyBoardRow = ({
                     enter
                 </button>
             ) : null}
+
             {content.split('').map((letter) => {
                 const color = keyColor[letter] ? keyColor[letter] : '';
 
@@ -30,6 +30,7 @@ export const KeyBoardRow = ({
                     </button>
                 );
             })}
+
             {isLastRow ? (
                 <button key="backspace" className="keyboard-button">
                     backspace

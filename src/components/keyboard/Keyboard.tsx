@@ -1,7 +1,5 @@
-import { KeyBoardRow } from '../keyboard-row/keyboardRow';
+import { KeyBoardRow } from '../keyboard-row/KeyboardRow';
 import './Keyboard.css';
-
-// TODO: separate keyboard into row
 
 export const KeyBoard = () => {
     return (
