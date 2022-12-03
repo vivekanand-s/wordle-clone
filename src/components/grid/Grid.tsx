@@ -16,7 +16,6 @@ enum AllowedKeys {
 }
 
 // TODO: local storage
-
 export const Grid = () => {
     const [animateRow, setAnimateRow] = useState(false);
     const wordsHistory = useAppSelector(selectWordsHistory);
@@ -32,9 +31,12 @@ export const Grid = () => {
     }, [currentWord]);
 
     const keyPressHandler = (event: KeyboardEvent) => {
+        if (event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) {
+            return;
+        }
+
         const currentKey = event.key.toLowerCase();
         const newWord = currentWord + currentKey;
-
         if (currentKey === AllowedKeys.BACKSPACE) {
             dispatch(
                 setCurrentWord(currentWord.slice(0, currentWord.length - 1))
@@ -52,11 +54,6 @@ export const Grid = () => {
             dispatch(addWords(currentWord));
             dispatch(setKeyColor(currentWord));
             dispatch(setCurrentWord(''));
-            return;
-        }
-
-        // to avoid ALT, CRTL, TAB, SHIFT
-        if (currentKey.length > 1) {
             return;
         }
 
@@ -86,7 +83,7 @@ export const Grid = () => {
                     className={`row ${isCurrentRow ? 'current-row' : ''}`}
                     key={rowIndex}
                 >
-                    {row.map((cell, colIndex) => {
+                    {row.map((_, colIndex) => {
                         const data = word[colIndex] ?? '';
                         return (
                             <Cell
