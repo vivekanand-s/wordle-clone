@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getColorForLetter } from '../../color.util';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import {
     selectCurrentWord,
@@ -7,6 +6,7 @@ import {
 } from '../../store/selectors/wordleSelector';
 import { setKeyColor } from '../../store/slice/keyboardSlice';
 import { addWords, setCurrentWord } from '../../store/slice/wordleSlice';
+import { Cell } from '../cell/Cell';
 import './Grid.css';
 
 const grid = Array(6).fill(Array(5).fill(''));
@@ -15,7 +15,6 @@ enum AllowedKeys {
     BACKSPACE = 'backspace',
 }
 
-// TODO: separate grid into smaller components
 // TODO: local storage
 
 export const Grid = () => {
@@ -77,31 +76,6 @@ export const Grid = () => {
         return rowData ?? '';
     };
 
-    const renderCell = (
-        data: string,
-        rowIndex: number,
-        colIndex: number
-    ): JSX.Element => {
-        const colorClassName = getColorForLetter(data, colIndex);
-        // flip card only for entered row, not for current or empty row
-        const flipCard = rowIndex < wordsHistory.length;
-        const transitionDelay = `${200 * colIndex}ms`;
-
-        return (
-            <div
-                className={`cell ${flipCard ? 'flip-cards' : ''}`}
-                key={colIndex}
-            >
-                <div className="container" style={{ transitionDelay }}>
-                    <div className="front">{data}</div>
-                    <div className={`back ${colorClassName}`} key={colIndex}>
-                        {data}
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
     const renderGrid = (): JSX.Element[] => {
         return grid.map((row: [], rowIndex: number) => {
             const word = getRowData(rowIndex);
@@ -114,7 +88,14 @@ export const Grid = () => {
                 >
                     {row.map((cell, colIndex) => {
                         const data = word[colIndex] ?? '';
-                        return renderCell(data, rowIndex, colIndex);
+                        return (
+                            <Cell
+                                data={data}
+                                rowIndex={rowIndex}
+                                colIndex={colIndex}
+                                key={colIndex}
+                            />
+                        );
                     })}
                 </div>
             );
@@ -124,7 +105,7 @@ export const Grid = () => {
     return (
         <section>
             <div
-                className={`grid ${animateRow ? 'animate' : ''}`}
+                className={`grid ${animateRow ? 'animate-row' : ''}`}
                 onAnimationEnd={handleAnimationEnd}
             >
                 {renderGrid()}
