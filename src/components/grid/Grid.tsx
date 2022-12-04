@@ -1,26 +1,20 @@
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
+import { useAppSelector } from '../../hooks/storeHooks';
 import {
     selectCurrentWord,
     selectWordsHistory,
 } from '../../store/selectors/wordleSelector';
-import { setKeyColor } from '../../store/slice/keyboardSlice';
-import { addWords, setCurrentWord } from '../../store/slice/wordleSlice';
+import { AllowedKeys, handleKey } from '../../utils/handleKey.util';
 import { Cell } from '../cell/Cell';
 import './Grid.css';
 
 const grid = Array(6).fill(Array(5).fill(''));
-enum AllowedKeys {
-    ENTER = 'enter',
-    BACKSPACE = 'backspace',
-}
 
 // TODO: local storage
 export const Grid = () => {
     const [animateRow, setAnimateRow] = useState(false);
     const wordsHistory = useAppSelector(selectWordsHistory);
     const currentWord = useAppSelector(selectCurrentWord);
-    const dispatch = useAppDispatch();
 
     useEffect(() => {
         window.addEventListener('keydown', keyPressHandler);
@@ -36,31 +30,12 @@ export const Grid = () => {
         }
 
         const currentKey = event.key.toLowerCase();
-        const newWord = currentWord + currentKey;
-        if (currentKey === AllowedKeys.BACKSPACE) {
-            dispatch(
-                setCurrentWord(currentWord.slice(0, currentWord.length - 1))
-            );
-            return;
-        }
-
         if (currentKey === AllowedKeys.ENTER && currentWord.length < 5) {
             setAnimateRow(true);
             return;
         }
 
-        if (currentKey === AllowedKeys.ENTER && currentWord.length === 5) {
-            // TODO: show success
-            dispatch(addWords(currentWord));
-            dispatch(setKeyColor(currentWord));
-            dispatch(setCurrentWord(''));
-            return;
-        }
-
-        if (/[a-z]/i.test(currentKey) && newWord.length <= 5) {
-            dispatch(setCurrentWord(newWord));
-            return;
-        }
+        handleKey(currentKey);
     };
 
     const handleAnimationEnd = () => {

@@ -1,11 +1,11 @@
 import { useAppSelector } from '../../hooks/storeHooks';
 import { selectKeyColor } from '../../store/selectors/keyboardSelector';
+import { handleKey } from '../../utils/handleKey.util';
 
 interface KeyBoardRowProps {
     content: string;
     isLastRow?: boolean;
 }
-// TODO: keyboard click
 
 export const KeyBoardRow = ({
     content,
@@ -16,7 +16,11 @@ export const KeyBoardRow = ({
     return (
         <div className="keyboard-row">
             {isLastRow ? (
-                <button key="enter" className="keyboard-button">
+                <button
+                    key="enter"
+                    className="keyboard-button"
+                    onClick={() => handleKey('enter')}
+                >
                     enter
                 </button>
             ) : null}
@@ -25,14 +29,22 @@ export const KeyBoardRow = ({
                 const color = keyColor[letter] ? keyColor[letter] : '';
 
                 return (
-                    <button key={letter} className={`keyboard-button ${color}`}>
+                    <button
+                        key={letter}
+                        className={`keyboard-button ${color}`}
+                        onClick={() => handleKey(letter)}
+                    >
                         {letter}
                     </button>
                 );
             })}
 
             {isLastRow ? (
-                <button key="backspace" className="keyboard-button">
+                <button
+                    key="backspace"
+                    className="keyboard-button"
+                    onClick={() => handleKey('backspace')}
+                >
                     backspace
                 </button>
             ) : null}

@@ -1,4 +1,4 @@
-import { getColorForLetter } from '../../color.util';
+import { getColorForLetter } from '../../utils/color.util';
 import { useAppSelector } from '../../hooks/storeHooks';
 import { selectWordsHistory } from '../../store/selectors/wordleSelector';
 import './Cell.css';

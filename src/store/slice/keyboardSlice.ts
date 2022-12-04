@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getColorForLetter } from '../../color.util';
+import { getColorForLetter } from '../../utils/color.util';
 
 interface keyboardState {
     [letter: string]: string;
